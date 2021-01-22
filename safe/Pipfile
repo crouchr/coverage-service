@@ -10,6 +10,7 @@ shapely = "==1.7.1"
 opencv-python-headless = "==4.0.0.21"
 flask = "==1.1.2"
 requests = "==2.25.1"
+pytest = "==2.9.2"
 
 [dev-packages]
 
