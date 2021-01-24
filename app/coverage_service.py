@@ -8,6 +8,8 @@ from flask import Flask, jsonify, request
 import definitions
 import get_env
 
+import cloudcoverage
+
 app = Flask(__name__)
 
 
@@ -64,21 +66,23 @@ def get_coverage_api():
         answer = {}
         app_name = request.args.get('app_name')
 
-        filename = request.args.get('lat', None)
-        lon = float(request.args.get('lon', None))
-        print(
-            'solar_times_api() : app_name=' + app_name.__str__() + ', lat=' + lat.__str__() + ', lon=' + lon.__str__())
+        filename = request.args.get('filename', None)
 
-        status_code, answer = get_sunrise_sunset.get_solar_info_api1(lat, lon)
+        print('get_coverage_api() : app_name=' + app_name.__str__() + ', filename=' + filename)
+
+        new_image, coverage_percent = cloudcoverage.get_coverage(filename, is_daytime=True)
+
+        answer['status'] = 'OK'
+        answer['coverage'] = coverage_percent
 
         response = jsonify(answer)
 
         return response
 
     except Exception as e:
-        answer['function'] = 'get_solar_times()'
+        answer['function'] = 'get_coverage_api()'
         answer['error'] = str(e)
-        print('get_solar_times() : app_name=' + app_name.__str__() + ', error : ' + e.__str__())
+        print('get_coverage_api() : app_name=' + app_name.__str__() + ', error : ' + e.__str__())
         response = jsonify(answer, 500)
 
         return response
@@ -86,8 +90,8 @@ def get_coverage_api():
 
 if __name__ == '__main__':
     os.environ['PYTHONUNBUFFERED'] = "1"            # does this help with log buffering ?
-    version = get_env.get_version()             # container version
+    version = get_env.get_version()                 # container version
 
-    print('metmini-misc started, version=' + version)
+    print('coverage-service started, version=' + version)
 
-    app.run(host='0.0.0.0', port=definitions.metminimisc_service_listen_port.__str__())
+    app.run(host='0.0.0.0', port=definitions.coverage_service_listen_port.__str__())
