@@ -5,10 +5,6 @@ LABEL description="Cloud coverage microservice"
 # Generate logs in unbuffered mode
 ENV PYTHONUNBUFFERED=1
 
-# install Yoctopuce dependencies
-#RUN apt-get -y update
-#RUN apt-get -y install libusb-1.0.0 libusb-1.0.0-dev
-
 # Install Python dependencies
 RUN pip install pipenv
 COPY Pipfile* ./
@@ -25,5 +21,5 @@ WORKDIR /app
 EXPOSE 9502
 
 # run Python unbuffered so the logs are flushed
-#CMD ["python3", "-u", "light_service.py"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["python3", "-u", "coverage_service.py"]
+#CMD ["tail", "-f", "/dev/null"]
