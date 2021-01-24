@@ -22,8 +22,7 @@ RUN mkdir /app
 COPY app/*.py /app/
 WORKDIR /app
 
-# see value in definitions.py
-#EXPOSE 9503
+EXPOSE 9502
 
 # run Python unbuffered so the logs are flushed
 #CMD ["python3", "-u", "light_service.py"]
