@@ -1,7 +1,6 @@
 # The parts of the coverageimage that are red signify cloud
 import cloudcoverage
 
-
 def main():
 
     image = '../test_images/image397.jpg'
