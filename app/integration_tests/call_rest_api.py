@@ -14,8 +14,8 @@ def call_rest_api(endpoint, query):
     """
 
     response = requests.get(endpoint, params=query)
-    if response.status_code != 200:
-        return 500, None
+    # if response.status_code != 200:
+    #     return 500, None
 
     response_dict = json.loads(response.content.decode('utf-8'))
 
