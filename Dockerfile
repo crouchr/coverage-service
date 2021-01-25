@@ -21,5 +21,5 @@ WORKDIR /app
 EXPOSE 9502
 
 # run Python unbuffered so the logs are flushed
-CMD ["python3", "-u", "coverage_service.py"]
-#CMD ["tail", "-f", "/dev/null"]
+#CMD ["python3", "-u", "coverage_service.py"]
+CMD ["tail", "-f", "/dev/null"]
