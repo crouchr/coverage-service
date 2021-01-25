@@ -5,6 +5,10 @@ LABEL description="Cloud coverage microservice"
 # Generate logs in unbuffered mode
 ENV PYTHONUNBUFFERED=1
 
+# Install packages
+RUN apt-get -y update
+RUN apt-get -y install joe
+
 # Install Python dependencies
 RUN pip install pipenv
 COPY Pipfile* ./
@@ -20,6 +24,6 @@ WORKDIR /app
 
 EXPOSE 9502
 
-# run Python unbuffered so the logs are flushed
-#CMD ["python3", "-u", "coverage_service.py"]
-CMD ["tail", "-f", "/dev/null"]
+# Note Python 2, not the usual Python 3
+CMD ["python", "-u", "coverage_service.py"]
+#CMD ["tail", "-f", "/dev/null"]
