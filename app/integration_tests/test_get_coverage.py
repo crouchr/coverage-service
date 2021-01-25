@@ -18,7 +18,7 @@ def test_get_coverage_local_file():
     assert response_dict['coverage'] == 68
 
 
-def test_get_coverage_data_file():
+def test_get_coverage_data_file_jpg():
     """
     File is located in the /data mount (external USB drive)
     Test /status
@@ -32,6 +32,22 @@ def test_get_coverage_data_file():
 
     assert status_code == 200
     assert response_dict['coverage'] == 68
+
+
+def test_get_coverage_data_file_png():
+    """
+    File is located in the /data mount (external USB drive)
+    Test /status
+    :return:
+    """
+    query = {}
+    query['app_name'] = 'integration_tests'
+    query['filename'] = integration_definitions.MEDIA_DIR + 'test_images/test_image_1.png'
+
+    status_code, response_dict = call_rest_api.call_rest_api(integration_definitions.endpoint_base + '/get_coverage', query)
+
+    assert status_code == 200
+    assert response_dict['coverage'] == 99
 
 
 def test_get_coverage_noexist_file():
